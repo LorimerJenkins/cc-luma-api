@@ -18,6 +18,16 @@ const server = `http://localhost:${portNumber}`;
 // const data = await response.json();
 // console.log(data);
 
+//-------------------------------
+
+// // Get all films
+// const endPoint = "getAllFilms";
+
+// const response = await fetch(`${server}/${endPoint}`);
+
+// const data = await response.json();
+// console.log(data);
+
 //--------------------------------------------------------------------------------------------------------------- creator
 
 // // Get film from hash

@@ -10,6 +10,7 @@ import { getTheatreCorporationInfo } from "./src/theatre/getTheatreCorporationIn
 import { getFilmFromHash } from "./src/creator/getFilmFromHash";
 import { getProfile } from "./src/fan/getProfile";
 import { updateProfile } from "./src/fan/updateProfile";
+import { getAllFilms } from "./src/theatre/getAllFilms";
 
 const app: express.Application = express();
 app.use(
@@ -53,6 +54,28 @@ app.get(getTheatreCorporationInfoEndPoint, async (req, res) => {
       "\x1b[31m",
       `Error from ${getTheatreCorporationInfoEndPoint}: ${error}`,
     );
+    res.json({
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown Error",
+    });
+  }
+});
+
+//-------------------------------
+
+// Get all films
+const getAllFilmsEndpoint = "/getAllFilms";
+app.get(getAllFilmsEndpoint, async (req, res) => {
+  try {
+    const response = await getAllFilms();
+
+    console.log(
+      "\x1b[32m",
+      `Response from ${getAllFilmsEndpoint}: ${JSON.stringify(response)}`,
+    );
+    res.json(response);
+  } catch (error) {
+    console.error("\x1b[31m", `Error from ${getAllFilmsEndpoint}: ${error}`);
     res.json({
       success: false,
       error: error instanceof Error ? error.message : "Unknown Error",
@@ -124,6 +147,8 @@ app.get(getProfileEndPoint, async (req, res) => {
     });
   }
 });
+
+//-------------------------------
 
 // Update profile from auth0ID
 const updateProfileEndPoint = "/updateProfile";
