@@ -1,6 +1,9 @@
 import { portNumber } from "./index";
 
-const localServer = `http://localhost:${portNumber}`;
+// local
+const server = `http://localhost:${portNumber}`;
+// prod
+// const server = 'https://cc-luma-api-5a085f15e5dc.herokuapp.com/'
 
 //--------------------------------------------------------------------------------------------------------------- theatre
 
@@ -9,7 +12,7 @@ const endPoint = "getTheatreCorporationInfo";
 const theatreCorporationUid = "CW";
 
 const response = await fetch(
-  `${localServer}/${endPoint}?theatreCorporationUid=${theatreCorporationUid}`,
+  `${server}/${endPoint}?theatreCorporationUid=${theatreCorporationUid}`,
 );
 
 const data = await response.json();
