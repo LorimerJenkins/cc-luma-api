@@ -12,7 +12,7 @@
     "build": "tsup index.ts --format cjs,esm --dts",
     "prettier": "prettier --write .",
     "heroku-postbuild": "tsup index.ts --format cjs,esm --dts",
-    "monitor-heroku": "heroku logs --tail --app cc-luma-api"
+    "heroku-logs": "heroku logs --tail --app cc-luma-api"
   },
   "peerDependencies": {
     "typescript": "^5"
