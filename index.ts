@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 
 // Home (ping)
 app.get("/", (req: express.Request, res: express.Response) => {
+  console.log("\x1b[32m", `Ping`);
   res.json({ response: true });
 });
 
