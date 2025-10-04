@@ -7,17 +7,35 @@ const server = `http://localhost:${portNumber}`;
 
 //--------------------------------------------------------------------------------------------------------------- theatre
 
-// Get theatre corporation info
-const endPoint = "getTheatreCorporationInfo";
-const theatreCorporationUid = "CW";
+// // Get theatre corporation info
+// const endPoint = "getTheatreCorporationInfo";
+// const theatreCorporationUid = "theatreCorporationUID-123";
 
-const response = await fetch(
-  `${server}/${endPoint}?theatreCorporationUid=${theatreCorporationUid}`,
-);
+// const response = await fetch(
+//   `${server}/${endPoint}?theatreCorporationUid=${theatreCorporationUid}`,
+// );
 
-const data = await response.json();
-console.log(data);
+// const data = await response.json();
+// console.log(data);
 
 //--------------------------------------------------------------------------------------------------------------- creator
 
+// // Get film from hash
+// const endPoint = "getFilmFromHash";
+// const filmUID = "filmUID-123";
+
+// const response = await fetch(`${server}/${endPoint}?filmUID=${filmUID}`);
+
+// const data = await response.json();
+// console.log(data);
+
 //--------------------------------------------------------------------------------------------------------------- fan
+
+// // Get profile
+// const endPoint = "getProfile";
+// const auth0UID = "auth0|68e18d70c44ac97f332acf1a";
+
+// const response = await fetch(`${server}/${endPoint}?auth0UID=${auth0UID}`);
+
+// const data = await response.json();
+// console.log(data);

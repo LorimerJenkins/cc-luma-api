@@ -7,6 +7,8 @@ dotEnv.config();
 
 // endpoint imports
 import { getTheatreCorporationInfo } from "./src/theatre/getTheatreCorporationInfo";
+import { getFilmFromHash } from "./src/creator/getFilmFromHash";
+import { getProfile } from "./src/fan/getProfile";
 
 const app: express.Application = express();
 app.use(
@@ -23,9 +25,11 @@ app.get("/", (req: express.Request, res: express.Response) => {
   res.json({ response: true });
 });
 
+//--------------------------------------------------------------------------------------------------------------- theatre
+
 // Get theatre corporation info
-const endPoint1 = "/getTheatreCorporationInfo";
-app.get(endPoint1, async (req, res) => {
+const getTheatreCorporationInfoEndPoint = "/getTheatreCorporationInfo";
+app.get(getTheatreCorporationInfoEndPoint, async (req, res) => {
   try {
     const { theatreCorporationUid } = req.query;
 
@@ -40,11 +44,14 @@ app.get(endPoint1, async (req, res) => {
 
     console.log(
       "\x1b[32m",
-      `Response from ${endPoint1}: ${JSON.stringify(response)}`,
+      `Response from ${getTheatreCorporationInfoEndPoint}: ${JSON.stringify(response)}`,
     );
     res.json(response);
   } catch (error) {
-    console.error("\x1b[31m", `Error from ${endPoint1}: ${error}`);
+    console.error(
+      "\x1b[31m",
+      `Error from ${getTheatreCorporationInfoEndPoint}: ${error}`,
+    );
     res.json({
       success: false,
       error: error instanceof Error ? error.message : "Unknown Error",
@@ -52,7 +59,73 @@ app.get(endPoint1, async (req, res) => {
   }
 });
 
-// Start up server
+//--------------------------------------------------------------------------------------------------------------- creator
+
+// Get film from hash
+const getFilmFromHashEndPoint = "/getFilmFromHash";
+app.get(getFilmFromHashEndPoint, async (req, res) => {
+  try {
+    const { filmUID } = req.query;
+
+    if (!filmUID || typeof filmUID !== "string") {
+      return res.status(400).json({
+        success: false,
+        error: "filmUID query parameter is required",
+      });
+    }
+
+    const response = await getFilmFromHash(filmUID);
+
+    console.log(
+      "\x1b[32m",
+      `Response from ${getFilmFromHashEndPoint}: ${JSON.stringify(response)}`,
+    );
+    res.json(response);
+  } catch (error) {
+    console.error(
+      "\x1b[31m",
+      `Error from ${getFilmFromHashEndPoint}: ${error}`,
+    );
+    res.json({
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown Error",
+    });
+  }
+});
+
+//--------------------------------------------------------------------------------------------------------------- fan
+
+// Get profile from auth0ID
+const getProfileEndPoint = "/getProfile";
+app.get(getProfileEndPoint, async (req, res) => {
+  try {
+    const { auth0UID } = req.query;
+
+    if (!auth0UID || typeof auth0UID !== "string") {
+      return res.status(400).json({
+        success: false,
+        error: "auth0UID query parameter is required",
+      });
+    }
+
+    const response = await getProfile(auth0UID);
+
+    console.log(
+      "\x1b[32m",
+      `Response from ${getProfileEndPoint}: ${JSON.stringify(response)}`,
+    );
+    res.json(response);
+  } catch (error) {
+    console.error("\x1b[31m", `Error from ${getProfileEndPoint}: ${error}`);
+    res.json({
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown Error",
+    });
+  }
+});
+
+//--------------------------------------------------------------------------------------------------------------- start up server
+
 export const portNumber = process.env.PORT;
 app.listen(portNumber, () => {
   console.log();

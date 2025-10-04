@@ -25,19 +25,51 @@ Retrieves information about a specific theatre corporation.
 **Example Request:**
 
 ```bash
-curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getTheatreCorporationInfo?theatreCorporationUid=CW"
+curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getTheatreCorporationInfo?theatreCorporationUid=theatreCorporationUID-123"
 ```
 
 ---
 
 ## Creator Endpoints
 
-Documentation for creator endpoints to be added.
+### Get Film From Hash
+
+Retrieves film information using a film UID.
+
+**Endpoint:** `GET /getFilmFromHash`
+
+**Query Parameters:**
+
+| Parameter | Type   | Required | Description                    |
+| --------- | ------ | -------- | ------------------------------ |
+| `filmUID` | string | Yes      | Unique identifier for the film |
+
+**Example Request:**
+
+```bash
+curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getFilmFromHash?filmUID=filmUID-123"
+```
 
 ---
 
 ## Fan Endpoints
 
-Documentation for fan endpoints to be added.
+### Get Profile
+
+Retrieves user profile information.
+
+**Endpoint:** `GET /getProfile`
+
+**Query Parameters:**
+
+| Parameter  | Type   | Required | Description                      |
+| ---------- | ------ | -------- | -------------------------------- |
+| `auth0UID` | string | Yes      | Auth0 unique identifier for user |
+
+**Example Request:**
+
+```bash
+curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getProfile?auth0UID=auth0|68e18d70c44ac97f332acf1a"
+```
 
 ---

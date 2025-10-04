@@ -1,7 +1,7 @@
 [
   {
     "theatreCorporation": "Cineworld",
-    "theatreCorporationUid": "CW",
+    "theatreCorporationUID": "theatreCorporationUID-123",
     "bankingInfo": {
       "bankName": "Chase",
       "bankAddress": "1 Cherry Tree Lane, CB3 901, Austin, United States",
@@ -12,7 +12,7 @@
     "theatres": [
       {
         "location": "Stevenage",
-        "theatreUid": "T-CW-SG",
+        "theatreUID": "theatreUID-1",
         "screens": [
           { "screenNumber": 1, "maxSeats": 50, "minSeatsToBook": 20 },
           { "screenNumber": 2, "maxSeats": 40, "minSeatsToBook": 10 }
@@ -20,7 +20,7 @@
       },
       {
         "location": "Letchworth",
-        "theatreUid": "T-CW-LW",
+        "theatreUid": "theatreUID-2",
         "screens": [
           { "screenNumber": 1, "maxSeats": 1000, "minSeatsToBook": 250 },
           { "screenNumber": 2, "maxSeats": 300, "minSeatsToBook": 30 }
