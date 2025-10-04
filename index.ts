@@ -9,6 +9,7 @@ dotEnv.config();
 import { getTheatreCorporationInfo } from "./src/theatre/getTheatreCorporationInfo";
 import { getFilmFromHash } from "./src/creator/getFilmFromHash";
 import { getProfile } from "./src/fan/getProfile";
+import { updateProfile } from "./src/fan/updateProfile";
 
 const app: express.Application = express();
 app.use(
@@ -117,6 +118,35 @@ app.get(getProfileEndPoint, async (req, res) => {
     res.json(response);
   } catch (error) {
     console.error("\x1b[31m", `Error from ${getProfileEndPoint}: ${error}`);
+    res.json({
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown Error",
+    });
+  }
+});
+
+// Update profile from auth0ID
+const updateProfileEndPoint = "/updateProfile";
+app.get(updateProfileEndPoint, async (req, res) => {
+  try {
+    const { auth0UID } = req.query;
+
+    if (!auth0UID || typeof auth0UID !== "string") {
+      return res.status(400).json({
+        success: false,
+        error: "auth0UID query parameter is required",
+      });
+    }
+
+    const response = await updateProfile(auth0UID);
+
+    console.log(
+      "\x1b[32m",
+      `Response from ${updateProfileEndPoint}: ${JSON.stringify(response)}`,
+    );
+    res.json(response);
+  } catch (error) {
+    console.error("\x1b[31m", `Error from ${updateProfileEndPoint}: ${error}`);
     res.json({
       success: false,
       error: error instanceof Error ? error.message : "Unknown Error",

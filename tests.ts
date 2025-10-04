@@ -39,3 +39,14 @@ const server = `http://localhost:${portNumber}`;
 
 // const data = await response.json();
 // console.log(data);
+
+//-------------------------------
+
+// // Update profile
+// const endPoint = "updateProfile";
+// const auth0UID = "auth0|68e18d70c44ac97f332acf1a";
+
+// const response = await fetch(`${server}/${endPoint}?auth0UID=${auth0UID}`);
+
+// const data = await response.json();
+// console.log(data);

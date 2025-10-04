@@ -25,7 +25,7 @@ Retrieves information about a specific theatre corporation.
 **Example Request:**
 
 ```bash
-curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getTheatreCorporationInfo?theatreCorporationUid=theatreCorporationUID-123"
+curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getTheatreCorporationInfo?theatreCorporationUid=CW"
 ```
 
 ---
@@ -70,6 +70,24 @@ Retrieves user profile information.
 
 ```bash
 curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getProfile?auth0UID=auth0|68e18d70c44ac97f332acf1a"
+```
+
+### Update Profile
+
+Updates user profile information.
+
+**Endpoint:** `GET /updateProfile`
+
+**Query Parameters:**
+
+| Parameter  | Type   | Required | Description                      |
+| ---------- | ------ | -------- | -------------------------------- |
+| `auth0UID` | string | Yes      | Auth0 unique identifier for user |
+
+**Example Request:**
+
+```bash
+curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/updateProfile?auth0UID=auth0|68e18d70c44ac97f332acf1a"
 ```
 
 ---
