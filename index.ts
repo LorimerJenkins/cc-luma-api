@@ -53,7 +53,7 @@ app.get(endPoint1, async (req, res) => {
 });
 
 // Start up server
-export const portNumber = 3001;
+export const portNumber = process.env.PORT;
 app.listen(portNumber, () => {
   console.log();
   console.log("\x1b[32m", `========================================`);
