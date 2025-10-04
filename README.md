@@ -28,6 +28,22 @@ Retrieves information about a specific theatre corporation.
 curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getTheatreCorporationInfo?theatreCorporationUid=CW"
 ```
 
+### Get All Films
+
+Retrieves a list of all films.
+
+**Endpoint:** `GET /getAllFilms`
+
+**Query Parameters:**
+
+None
+
+**Example Request:**
+
+```bash
+curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getAllFilms"
+```
+
 ---
 
 ## Creator Endpoints
