@@ -31,16 +31,16 @@ app.get("/", (req: express.Request, res: express.Response) => {
 const getTheatreCorporationInfoEndPoint = "/getTheatreCorporationInfo";
 app.get(getTheatreCorporationInfoEndPoint, async (req, res) => {
   try {
-    const { theatreCorporationUid } = req.query;
+    const { theatreCorporationUID } = req.query;
 
-    if (!theatreCorporationUid || typeof theatreCorporationUid !== "string") {
+    if (!theatreCorporationUID || typeof theatreCorporationUID !== "string") {
       return res.status(400).json({
         success: false,
-        error: "theatreCorporationUid query parameter is required",
+        error: "theatreCorporationUID query parameter is required",
       });
     }
 
-    const response = await getTheatreCorporationInfo(theatreCorporationUid);
+    const response = await getTheatreCorporationInfo(theatreCorporationUID);
 
     console.log(
       "\x1b[32m",

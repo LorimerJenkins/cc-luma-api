@@ -7,16 +7,16 @@ const server = `http://localhost:${portNumber}`;
 
 //--------------------------------------------------------------------------------------------------------------- theatre
 
-// // Get theatre corporation info
-// const endPoint = "getTheatreCorporationInfo";
-// const theatreCorporationUid = "theatreCorporationUID-123";
+// Get theatre corporation info
+const endPoint = "getTheatreCorporationInfo";
+const theatreCorporationUID = "theatreCorporationUID-123";
 
-// const response = await fetch(
-//   `${server}/${endPoint}?theatreCorporationUid=${theatreCorporationUid}`,
-// );
+const response = await fetch(
+  `${server}/${endPoint}?theatreCorporationUID=${theatreCorporationUID}`,
+);
 
-// const data = await response.json();
-// console.log(data);
+const data = await response.json();
+console.log(data);
 
 //--------------------------------------------------------------------------------------------------------------- creator
 
