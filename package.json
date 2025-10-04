@@ -1,0 +1,30 @@
+{
+  "name": "cc-luma-api",
+  "version": "0.0.1",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "scripts": {
+    "dev": "bun run prettier && bun run build && bun run dist/index.js",
+    "build": "tsup index.ts --format cjs,esm --dts",
+    "prettier": "prettier --write .",
+    "heroku-postbuild": "tsup index.ts --format cjs,esm --dts",
+    "monitor-heroku": "heroku logs --tail --app cc-luma-api"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "prettier": "^3.6.2",
+    "tsup": "^8.5.0"
+  }
+}
