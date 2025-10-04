@@ -28,6 +28,56 @@ Retrieves information about a specific theatre corporation.
 curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getTheatreCorporationInfo?theatreCorporationUid=CW"
 ```
 
+**Example Response:**
+
+```json
+{
+  "theatreCorporation": "Cineworld",
+  "theatreCorporationUID": "theatreCorporationUID-123",
+  "bankingInfo": {
+    "bankName": "Chase",
+    "bankAddress": "1 Cherry Tree Lane, CB3 901, Austin, United States",
+    "accountName": "Cineworld Ltd",
+    "accountNumber": "41119203",
+    "sortCode": "30-10-10"
+  },
+  "theatres": [
+    {
+      "location": "Stevenage",
+      "theatreUID": "theatreUID-1",
+      "screens": [
+        {
+          "screenNumber": 1,
+          "maxSeats": 50,
+          "minSeatsToBook": 20
+        },
+        {
+          "screenNumber": 2,
+          "maxSeats": 40,
+          "minSeatsToBook": 10
+        }
+      ]
+    },
+    {
+      "location": "Letchworth",
+      "theatreUid": "theatreUID-2",
+      "screens": [
+        {
+          "screenNumber": 1,
+          "maxSeats": 1000,
+          "minSeatsToBook": 250
+        },
+        {
+          "screenNumber": 2,
+          "maxSeats": 300,
+          "minSeatsToBook": 30
+        }
+      ]
+    }
+  ]
+}
+```
+
 ### Get All Films
 
 Retrieves a list of all films.
@@ -42,6 +92,30 @@ None
 
 ```bash
 curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getAllFilms"
+```
+
+**Example Response:**
+
+```json
+[
+  {
+    "film": "Peep Show",
+    "filmUID": "filmUID-123",
+    "creatorUID": "creatorUID-123",
+    "targetCities": ["Austin", "New York"],
+    "date": "5/12/2025",
+    "time": "morning",
+    "runTimeMins": "60",
+    "genre": "comedy",
+    "trailer": "https://www.youtube.com/watch?v=uonrtGIick4",
+    "coverImage": "https://m.media-amazon.com/images/S/pv-target-images/65b427765a01ad9eccbc59fa3c61d8082620d3d91dc620c33512c2434d8d2664.jpg",
+    "description": "Peep Show is a British sitcom starring David Mitchell and Robert Webb as two contrasting flatmates, the awkward and frugal Mark, and the irresponsible and hedonistic Jeremy. The show is known for its unique point-of-view perspective, allowing viewers to experience events from Mark's or Jeremy's perspective through their internal monologues. The comedy stems from the characters' contrasting personalities, Mark's chronic social anxiety and inner turmoil, and Jeremy's often delusional and self-serving pursuits.",
+    "cast": ["David Mitchell", "Robert Webb", "Olivia Colman"],
+    "otherImages": [
+      "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p274645_b_v13_af.jpg"
+    ]
+  }
+]
 ```
 
 ---
@@ -66,6 +140,28 @@ Retrieves film information using a film UID.
 curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getFilmFromHash?filmUID=filmUID-123"
 ```
 
+**Example Response:**
+
+```json
+{
+  "film": "Peep Show",
+  "filmUID": "filmUID-123",
+  "creatorUID": "creatorUID-123",
+  "targetCities": ["Austin", "New York"],
+  "date": "5/12/2025",
+  "time": "morning",
+  "runTimeMins": "60",
+  "genre": "comedy",
+  "trailer": "https://www.youtube.com/watch?v=uonrtGIick4",
+  "coverImage": "https://m.media-amazon.com/images/S/pv-target-images/65b427765a01ad9eccbc59fa3c61d8082620d3d91dc620c33512c2434d8d2664.jpg",
+  "description": "Peep Show is a British sitcom starring David Mitchell and Robert Webb as two contrasting flatmates, the awkward and frugal Mark, and the irresponsible and hedonistic Jeremy. The show is known for its unique point-of-view perspective, allowing viewers to experience events from Mark's or Jeremy's perspective through their internal monologues. The comedy stems from the characters' contrasting personalities, Mark's chronic social anxiety and inner turmoil, and Jeremy's often delusional and self-serving pursuits.",
+  "cast": ["David Mitchell", "Robert Webb", "Olivia Colman"],
+  "otherImages": [
+    "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p274645_b_v13_af.jpg"
+  ]
+}
+```
+
 ---
 
 ## Fan Endpoints
@@ -88,6 +184,35 @@ Retrieves user profile information.
 curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getProfile?auth0UID=auth0|68e18d70c44ac97f332acf1a"
 ```
 
+**Example Response:**
+
+```json
+{
+  "name": "Lorimer Jenkins",
+  "auth0UID": "auth0|68e18d70c44ac97f332acf1a",
+  "profilePic": "https://media.licdn.com/dms/image/v2/D4E03AQGhZqy0KdT2QA/profile-displayphoto-shrink_200_200/B4EZPbcT9mGYAc-/0/1734553452939?e=2147483647&v=beta&t=TSseAIS7xYMVPDi_FNSMdUxlNMiJMp6sYlz3ZhZjXsg",
+  "bio": "Ma name jeff.",
+  "email": "lorimer@theranos.com",
+  "gender": "male",
+  "number": "07283092723",
+  "birthday": "30/07/2003",
+  "socials": {
+    "x": "https://x.com/Lorimer_Jenkins",
+    "youtube": "https://www.youtube.com/@lorimerjenkins6265",
+    "linkedin": "https://www.linkedin.com/in/lorimerjenkins/",
+    "instagram": "https://www.instagram.com/lorimer_jenkins/",
+    "tiktok": "https://www.tiktok.com/@dannyboy83dannyboy",
+    "website": "https://lorimerjenkins.com"
+  },
+  "interestedIn": ["filmUID-123"],
+  "creatorAccount": {
+    "creatorEnabledAccount": true,
+    "creatorUID": "creatorUID-123",
+    "createdFilmUID": ["filmUID-123"]
+  }
+}
+```
+
 ### Update Profile
 
 Updates user profile information.
@@ -104,6 +229,18 @@ Updates user profile information.
 
 ```bash
 curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/updateProfile?auth0UID=auth0|68e18d70c44ac97f332acf1a"
+```
+
+**Example Response:**
+
+```json
+true
+```
+
+or
+
+```json
+false
 ```
 
 ---
