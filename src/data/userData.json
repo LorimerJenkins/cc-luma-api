@@ -2,6 +2,8 @@
   {
     "name": "Lorimer Jenkins",
     "auth0UID": "auth0|68e18d70c44ac97f332acf1a",
+    "profilePic": "https://media.licdn.com/dms/image/v2/D4E03AQGhZqy0KdT2QA/profile-displayphoto-shrink_200_200/B4EZPbcT9mGYAc-/0/1734553452939?e=2147483647&v=beta&t=TSseAIS7xYMVPDi_FNSMdUxlNMiJMp6sYlz3ZhZjXsg",
+    "bio": "Ma name jeff.",
     "email": "lorimer@theranos.com",
     "gender": "male",
     "number": "07283092723",
@@ -9,7 +11,10 @@
     "socials": {
       "x": "https://x.com/Lorimer_Jenkins",
       "youtube": "https://www.youtube.com/@lorimerjenkins6265",
-      "linkedin": "https://www.linkedin.com/in/lorimerjenkins/"
+      "linkedin": "https://www.linkedin.com/in/lorimerjenkins/",
+      "instagram": "https://www.instagram.com/lorimer_jenkins/",
+      "tiktok": "https://www.tiktok.com/@dannyboy83dannyboy",
+      "website": "https://lorimerjenkins.com"
     },
     "interestedIn": ["filmUID-123"],
     "creatorAccount": {
