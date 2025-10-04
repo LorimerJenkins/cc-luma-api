@@ -6,6 +6,11 @@
     "gender": "male",
     "number": "07283092723",
     "birthday": "30/07/2003",
-    "interestedIn": ["filmUID-123"]
+    "interestedIn": ["filmUID-123"],
+    "creatorAccount": {
+      "creatorEnabledAccount": true,
+      "creatorUID": "creatorUID-123",
+      "createdFilmUID": ["filmUID-123"]
+    }
   }
 ]
