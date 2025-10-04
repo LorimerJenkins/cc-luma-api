@@ -5,10 +5,15 @@
     "creatorUID": "creatorUID-123",
     "targetCities": ["Austin", "New York"],
     "date": "5/12/2025",
+    "time": "morning",
+    "runTimeMins": "60",
     "genre": "comedy",
     "trailer": "https://www.youtube.com/watch?v=uonrtGIick4",
     "coverImage": "https://m.media-amazon.com/images/S/pv-target-images/65b427765a01ad9eccbc59fa3c61d8082620d3d91dc620c33512c2434d8d2664.jpg",
     "description": "Peep Show is a British sitcom starring David Mitchell and Robert Webb as two contrasting flatmates, the awkward and frugal Mark, and the irresponsible and hedonistic Jeremy. The show is known for its unique point-of-view perspective, allowing viewers to experience events from Mark's or Jeremy's perspective through their internal monologues. The comedy stems from the characters' contrasting personalities, Mark's chronic social anxiety and inner turmoil, and Jeremy's often delusional and self-serving pursuits.",
-    "cast": ["David Mitchell", "Robert Webb", "Olivia Colman"]
+    "cast": ["David Mitchell", "Robert Webb", "Olivia Colman"],
+    "otherImages": [
+      "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p274645_b_v13_af.jpg"
+    ]
   }
 ]
