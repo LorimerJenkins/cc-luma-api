@@ -245,13 +245,26 @@ curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/createFilm" \
 **Example Response (Success):**
 
 ```json
-true
+{
+  "success": true,
+  "filmUID": "filmUID-abc123def456",
+  "insertedId": "507f1f77bcf86cd799439011"
+}
 ```
 
 **Example Response (Failure):**
 
 ```json
-false
+{
+  "success": false,
+  "error": "Failed to create film"
+}
+```
+
+**Example Response (Invalid JWT):**
+
+```json
+"Invalid JWT"
 ```
 
 **Example Response (Validation Error):**
@@ -350,6 +363,15 @@ curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getProfile" \
 }
 ```
 
+**Example Response (Profile Not Found):**
+
+```json
+{
+  "success": false,
+  "error": "Profile not found"
+}
+```
+
 ### Create Profile
 
 Creates a new user profile.
@@ -374,16 +396,33 @@ curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/createProfile" \
   }'
 ```
 
-**Example Response (Success):**
+**Example Response (Success - New User):**
 
 ```json
-true
+{
+  "success": true,
+  "userUID": "userUID-104884995888692415380",
+  "insertedId": "507f1f77bcf86cd799439011"
+}
+```
+
+**Example Response (Success - User Already Exists):**
+
+```json
+{
+  "success": true,
+  "message": "User already exists",
+  "userUID": "userUID-104884995888692415380"
+}
 ```
 
 **Example Response (Failure):**
 
 ```json
-false
+{
+  "success": false,
+  "error": "Failed to create profile"
+}
 ```
 
 **Example Response (Invalid Authentication):**
@@ -458,7 +497,17 @@ curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/updateProfile" \
       "linkedin": "https://www.linkedin.com/in/lorimerjenkins/"
     },
     "interestedIn": ["filmUID-123", "filmUID-456"]
-  }
+  },
+  "modifiedCount": 1
+}
+```
+
+**Example Response (Profile Not Found):**
+
+```json
+{
+  "success": false,
+  "error": "Profile not found"
 }
 ```
 
@@ -509,19 +558,50 @@ curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/rsvpForFilm" \
 **Example Response (Success):**
 
 ```json
-true
+{
+  "success": true,
+  "message": "Successfully RSVP'd for film",
+  "userUID": "userUID-104884995888692415380",
+  "filmUID": "filmUID-123"
+}
+```
+
+**Example Response (Already RSVP'd):**
+
+```json
+{
+  "success": true,
+  "message": "Already RSVP'd for this film",
+  "userUID": "userUID-104884995888692415380",
+  "filmUID": "filmUID-123"
+}
+```
+
+**Example Response (User Not Found):**
+
+```json
+{
+  "success": false,
+  "error": "User not found"
+}
 ```
 
 **Example Response (Failure):**
 
 ```json
-false
+{
+  "success": false,
+  "error": "Failed to RSVP for film"
+}
 ```
 
 **Example Response (Invalid Authentication):**
 
 ```json
-"Invalid JWT"
+{
+  "success": false,
+  "error": "Invalid JWT"
+}
 ```
 
 ---
@@ -557,3 +637,4 @@ All endpoints may return the following error responses:
 - All other endpoints requiring authentication currently only accept JWT
 - JWT tokens expire after a certain period (typically 1 hour based on the example token)
 - Error messages are returned in a consistent format with `success: false` and an `error` field describing the issue
+- MongoDB `insertedId` values are ObjectId strings that uniquely identify the document in the database
