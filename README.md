@@ -213,10 +213,13 @@ curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/createFilm" \
 **Example Response (Success):**
 
 ```json
-{
-  "success": true,
-  "filmUID": "filmUID-123"
-}
+true
+```
+
+**Example Response (Failure):**
+
+```json
+false
 ```
 
 **Example Response (Validation Error):**
