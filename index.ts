@@ -12,6 +12,9 @@ import { getProfile } from "./src/fan/getProfile";
 import { updateProfile } from "./src/fan/updateProfile";
 import { getAllFilms } from "./src/theatre/getAllFilms";
 import { createProfile } from "./src/fan/createProfile";
+import { createFilm } from "./src/creator/createFilm";
+import { validateFilm } from "./src/creator/validateFilmParams";
+import { type Film } from "./src/creator/createFilm";
 
 const app: express.Application = express();
 app.use(
@@ -118,6 +121,44 @@ app.get(getFilmFromHashEndPoint, async (req, res) => {
   }
 });
 
+//-------------------------------
+
+// Create film
+const createFilmEndPoint = "/createFilm";
+app.post(createFilmEndPoint, async (req, res) => {
+  try {
+    const film = req.body as Film;
+
+    if (!film) {
+      return res.status(400).json({
+        success: false,
+        error: "film data is required in request body",
+      });
+    }
+
+    const validation = validateFilm(film);
+    if (!validation.valid) {
+      return res.status(400).json({
+        success: false,
+        error: validation.error,
+      });
+    }
+
+    const response = await createFilm(film);
+
+    console.log(
+      "\x1b[32m",
+      `Response from ${createFilmEndPoint}: ${JSON.stringify(response)}`,
+    );
+    res.json(response);
+  } catch (error) {
+    console.error("\x1b[31m", `Error from ${createFilmEndPoint}: ${error}`);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown Error",
+    });
+  }
+});
 //--------------------------------------------------------------------------------------------------------------- fan
 
 // Get profile from auth0ID
@@ -153,14 +194,14 @@ app.get(getProfileEndPoint, async (req, res) => {
 
 // Update profile from auth0ID
 const updateProfileEndPoint = "/updateProfile";
-app.get(updateProfileEndPoint, async (req, res) => {
+app.post(updateProfileEndPoint, async (req, res) => {
   try {
-    const { JWT } = req.query;
+    const { JWT } = req.body;
 
     if (!JWT || typeof JWT !== "string") {
       return res.status(400).json({
         success: false,
-        error: "JWT query parameter is required",
+        error: "JWT is required in request body",
       });
     }
 
@@ -173,23 +214,25 @@ app.get(updateProfileEndPoint, async (req, res) => {
     res.json(response);
   } catch (error) {
     console.error("\x1b[31m", `Error from ${updateProfileEndPoint}: ${error}`);
-    res.json({
+    res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : "Unknown Error",
     });
   }
 });
 
+//-------------------------------
+
 // Create profile from JWT
 const createProfileEndPoint = "/createProfile";
-app.get(createProfileEndPoint, async (req, res) => {
+app.post(createProfileEndPoint, async (req, res) => {
   try {
-    const { JWT } = req.query;
+    const { JWT } = req.body;
 
     if (!JWT || typeof JWT !== "string") {
       return res.status(400).json({
         success: false,
-        error: "JWT query parameter is required",
+        error: "JWT is required in request body",
       });
     }
 
@@ -202,7 +245,7 @@ app.get(createProfileEndPoint, async (req, res) => {
     res.json(response);
   } catch (error) {
     console.error("\x1b[31m", `Error from ${createProfileEndPoint}: ${error}`);
-    res.json({
+    res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : "Unknown Error",
     });
