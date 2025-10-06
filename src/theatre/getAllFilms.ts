@@ -1,10 +1,15 @@
-import { readFile } from "fs/promises";
-import { join } from "path";
+import { getDatabase } from "../db/mongoClient";
 
 export async function getAllFilms() {
-  const filePath = join(process.cwd(), "src", "data", "filmData.json");
-  const fileContent = await readFile(filePath, "utf-8");
-  const filmData = JSON.parse(fileContent);
+  try {
+    const db = await getDatabase();
+    const filmsCollection = db.collection("films");
 
-  return filmData;
+    const films = await filmsCollection.find({}).toArray();
+
+    return films;
+  } catch (error) {
+    console.error("Error fetching all films:", error);
+    return [];
+  }
 }

@@ -1,8 +1,8 @@
-import { readFile } from "fs/promises";
-import { join } from "path";
+import { getDatabase } from "../db/mongoClient";
 import { verifyJWT } from "../utils/verifyJWT";
 
-export async function getProfile(JWT: string, userUID: string) {
+export async function getProfile(JWT: string, userUID?: string) {
+  // If JWT is provided, use it to get the userUID
   if (JWT) {
     const checkJWT = await verifyJWT(JWT);
 
@@ -16,12 +16,33 @@ export async function getProfile(JWT: string, userUID: string) {
     userUID = `userUID-${sub}`;
   }
 
-  const filePath = join(process.cwd(), "src", "data", "userData.json");
-  const fileContent = await readFile(filePath, "utf-8");
-  const profileData = JSON.parse(fileContent);
+  // If no userUID at this point, return error
+  if (!userUID) {
+    return {
+      success: false,
+      error: "No userUID provided",
+    };
+  }
 
-  const profile = profileData.find(
-    (profile: any) => profile.userUID === userUID,
-  );
-  return profile;
+  try {
+    const db = await getDatabase();
+    const usersCollection = db.collection("users");
+
+    const profile = await usersCollection.findOne({ userUID });
+
+    if (!profile) {
+      return {
+        success: false,
+        error: "Profile not found",
+      };
+    }
+
+    return profile;
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    return {
+      success: false,
+      error: "Failed to fetch profile",
+    };
+  }
 }
