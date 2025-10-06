@@ -664,7 +664,7 @@ curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/rsvpForFilm" \
 
 Allows a user to cancel their RSVP for a film.
 
-**Endpoint:** `POST /cancelRSVP`
+**Endpoint:** `POST /cancelUserRSVP`
 
 **Authentication:** Requires JWT
 
@@ -678,7 +678,7 @@ Allows a user to cancel their RSVP for a film.
 **Example Request:**
 
 ```bash
-curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/cancelRSVP" \
+curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/cancelUserRSVP" \
   -H "Content-Type: application/json" \
   -d '{
     "JWT": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3ZjBmMGYxNGU5Y2FmYTlhYjUxODAxNTBhZTcxNGM5ZmQxYjVjMjYiLCJ0eXAiOiJKV1QifQ...",
