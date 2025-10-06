@@ -12,5 +12,7 @@ export async function createProfile(JWT: string) {
 
   const userUID = `userUID-${sub}`;
 
+  // TODO: populate a blank user object (update profile will add specifics) and then add to the DB
+
   return true;
 }
