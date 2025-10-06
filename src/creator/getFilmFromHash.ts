@@ -1,18 +1,23 @@
 import { getDatabase } from "../db/mongoClient";
 import { verifyJWT } from "../utils/verifyJWT";
 
-export async function getFilmFromHash(filmUID: string, JWT: string) {
+export async function getFilmFromHash(filmUID: string, JWT?: string) {
   try {
-    const checkJWT = await verifyJWT(JWT);
+    let userUID: string | undefined;
+    let userSignedUp = false;
 
-    if (!checkJWT) {
-      return "Invalid JWT";
+    // Only verify JWT if provided
+    if (JWT) {
+      const checkJWT = await verifyJWT(JWT);
+
+      if (!checkJWT) {
+        return "Invalid JWT";
+      }
+
+      // @ts-ignore
+      const { sub } = checkJWT;
+      userUID = `userUID-${sub}`;
     }
-
-    // @ts-ignore
-    const { sub } = checkJWT;
-
-    const userUID = `userUID-${sub}`;
 
     const db = await getDatabase();
     const filmsCollection = db.collection("films");
@@ -29,9 +34,11 @@ export async function getFilmFromHash(filmUID: string, JWT: string) {
       .find({ interestedIn: filmUID })
       .toArray();
 
-    // Check if the current user is signed up for this film
-    const currentUser = await usersCollection.findOne({ userUID });
-    const userSignedUp = currentUser?.interestedIn?.includes(filmUID) || false;
+    // Check if the current user is signed up for this film (only if JWT was provided)
+    if (userUID) {
+      const currentUser = await usersCollection.findOne({ userUID });
+      userSignedUp = currentUser?.interestedIn?.includes(filmUID) || false;
+    }
 
     let usersInterested;
 
@@ -39,7 +46,7 @@ export async function getFilmFromHash(filmUID: string, JWT: string) {
       // Return all user UIDs if user is signed up
       usersInterested = interestedUsers.map((user) => user.userUID);
     } else {
-      // Return 3 random user UIDs if user is not signed up
+      // Return 3 random user UIDs if user is not signed up or JWT not provided
       const shuffled = interestedUsers.sort(() => 0.5 - Math.random());
       usersInterested = shuffled.slice(0, 3).map((user) => user.userUID);
     }

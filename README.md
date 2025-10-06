@@ -161,14 +161,14 @@ Retrieves film information using a film UID, including a list of interested user
 
 **Endpoint:** `POST /getFilmFromHash`
 
-**Authentication:** Requires JWT
+**Authentication:** Optional JWT (provides additional functionality when authenticated)
 
 **Request Body:**
 
-| Parameter | Type   | Required | Description                       |
-| --------- | ------ | -------- | --------------------------------- |
-| `filmUID` | string | Yes      | Unique identifier for the film    |
-| `JWT`     | string | Yes      | JSON Web Token for authentication |
+| Parameter | Type   | Required | Description                                                     |
+| --------- | ------ | -------- | --------------------------------------------------------------- |
+| `filmUID` | string | Yes      | Unique identifier for the film                                  |
+| `JWT`     | string | No       | JSON Web Token for authentication (optional, enhances response) |
 
 **Example Request:**
 

@@ -103,14 +103,6 @@ app.post(getFilmFromHashEndPoint, async (req, res) => {
         error: "filmUID is required in request body",
       });
     }
-
-    if (!JWT || typeof JWT !== "string") {
-      return res.status(400).json({
-        success: false,
-        error: "JWT is required in request body",
-      });
-    }
-
     const response = await getFilmFromHash(filmUID, JWT);
 
     console.log(
