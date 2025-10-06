@@ -92,18 +92,25 @@ app.get(getAllFilmsEndpoint, async (req, res) => {
 
 // Get film from hash
 const getFilmFromHashEndPoint = "/getFilmFromHash";
-app.get(getFilmFromHashEndPoint, async (req, res) => {
+app.post(getFilmFromHashEndPoint, async (req, res) => {
   try {
-    const { filmUID } = req.query;
+    const { filmUID, JWT } = req.body;
 
     if (!filmUID || typeof filmUID !== "string") {
       return res.status(400).json({
         success: false,
-        error: "filmUID query parameter is required",
+        error: "filmUID is required in request body",
       });
     }
 
-    const response = await getFilmFromHash(filmUID);
+    if (!JWT || typeof JWT !== "string") {
+      return res.status(400).json({
+        success: false,
+        error: "JWT is required in request body",
+      });
+    }
+
+    const response = await getFilmFromHash(filmUID, JWT);
 
     console.log(
       "\x1b[32m",
