@@ -1,9 +1,9 @@
 import { portNumber } from "./index";
 
 // local
-const server = `http://localhost:${portNumber}`;
+// const server = `http://localhost:${portNumber}`;
 // prod
-// const server = "https://cc-luma-api-5a085f15e5dc.herokuapp.com/";
+const server = "https://cc-luma-api-5a085f15e5dc.herokuapp.com/";
 
 //--------------------------------------------------------------------------------------------------------------- theatre
 
