@@ -17,6 +17,7 @@ import { validateFilm } from "./src/creator/validateFilmParams";
 import { type Film } from "./src/creator/createFilm";
 import { rsvpForFilm } from "./src/fan/rsvpForFilm";
 import { isUserRSVPd } from "./src/fan/isUserRSVPd";
+import { cancelUserRSVP } from "./src/fan/cancelUserRSVP";
 
 const app: express.Application = express();
 app.use(
@@ -322,6 +323,42 @@ app.post(isUserRSVPdEndpoint, async (req, res) => {
     res.json(response);
   } catch (error) {
     console.error("\x1b[31m", `Error from ${isUserRSVPdEndpoint}: ${error}`);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown Error",
+    });
+  }
+});
+
+//-------------------------------
+
+// Cancel a user RSVP
+const cancelUserRSVPEndpoint = "/cancelUserRsvp";
+app.post(cancelUserRSVPEndpoint, async (req, res) => {
+  try {
+    const { JWT, filmUID } = req.body;
+
+    if (
+      !JWT ||
+      typeof JWT !== "string" ||
+      !filmUID ||
+      typeof filmUID !== "string"
+    ) {
+      return res.status(400).json({
+        success: false,
+        error: "JWT + filmUID are required in request body",
+      });
+    }
+
+    const response = await cancelUserRSVP(JWT, filmUID);
+
+    console.log(
+      "\x1b[32m",
+      `Response from ${cancelUserRSVPEndpoint}: ${JSON.stringify(response)}`,
+    );
+    res.json(response);
+  } catch (error) {
+    console.error("\x1b[31m", `Error from ${cancelUserRSVPEndpoint}: ${error}`);
     res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : "Unknown Error",

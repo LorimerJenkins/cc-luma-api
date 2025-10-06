@@ -1,7 +1,7 @@
 import { getDatabase } from "../db/mongoClient";
 import { verifyJWT } from "../utils/verifyJWT";
 
-export async function rsvpForFilm(JWT: string, filmUID: string) {
+export async function cancelUserRSVP(JWT: string, filmUID: string) {
   const checkJWT = await verifyJWT(JWT);
 
   if (!checkJWT) {
@@ -30,40 +30,38 @@ export async function rsvpForFilm(JWT: string, filmUID: string) {
       };
     }
 
-    // Check if already RSVP'd
-    if (user.interestedIn && user.interestedIn.includes(filmUID)) {
+    // Check if user is actually RSVP'd for this film
+    if (!user.interestedIn || !user.interestedIn.includes(filmUID)) {
       return {
-        success: true,
-        message: "Already RSVP'd for this film",
-        userUID,
-        filmUID,
+        success: false,
+        error: "User is not RSVP'd for this film",
       };
     }
 
-    // Add filmUID to interestedIn array
+    // Remove filmUID from interestedIn array
     const result = await usersCollection.updateOne(
       { userUID },
-      { $addToSet: { interestedIn: filmUID } }, // $addToSet prevents duplicates
+      { $pull: { interestedIn: filmUID as any } }, // $pull removes the item from array
     );
 
     if (result.modifiedCount === 0) {
       return {
         success: false,
-        error: "Failed to RSVP",
+        error: "Failed to cancel RSVP",
       };
     }
 
     return {
       success: true,
-      message: "Successfully RSVP'd for film",
+      message: "Successfully cancelled RSVP for film",
       userUID,
       filmUID,
     };
   } catch (error) {
-    console.error("Error RSVPing for film:", error);
+    console.error("Error cancelling RSVP:", error);
     return {
       success: false,
-      error: "Failed to RSVP for film",
+      error: "Failed to cancel RSVP for film",
     };
   }
 }
