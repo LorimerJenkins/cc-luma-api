@@ -657,6 +657,76 @@ curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/rsvpForFilm" \
 }
 ```
 
+### Is User RSVP'd
+
+Checks if a user has RSVP'd for a specific film.
+
+**Endpoint:** `POST /isUserRSVPd`
+
+**Authentication:** Requires JWT
+
+**Request Body:**
+
+| Parameter | Type   | Required | Description                       |
+| --------- | ------ | -------- | --------------------------------- |
+| `JWT`     | string | Yes      | JSON Web Token for authentication |
+| `filmUID` | string | Yes      | Unique identifier for the film    |
+
+**Example Request:**
+
+```bash
+curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/isUserRSVPd" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "JWT": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3ZjBmMGYxNGU5Y2FmYTlhYjUxODAxNTBhZTcxNGM5ZmQxYjVjMjYiLCJ0eXAiOiJKV1QifQ...",
+    "filmUID": "filmUID-123"
+  }'
+```
+
+**Example Response (User is RSVP'd):**
+
+```json
+{
+  "isUserRSVPd": true,
+  "userUID": "userUID-104884995888692415380",
+  "filmUID": "filmUID-123"
+}
+```
+
+**Example Response (User is NOT RSVP'd):**
+
+```json
+{
+  "isUserRSVPd": false,
+  "userUID": "userUID-104884995888692415380",
+  "filmUID": "filmUID-123"
+}
+```
+
+**Example Response (User Not Found):**
+
+```json
+{
+  "success": false,
+  "error": "User not found"
+}
+```
+
+**Example Response (Invalid JWT):**
+
+```json
+"Invalid JWT"
+```
+
+**Example Response (Failure):**
+
+```json
+{
+  "success": false,
+  "error": "Failed to check RSVP status"
+}
+```
+
 ---
 
 ## Error Responses

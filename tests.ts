@@ -1,9 +1,9 @@
 import { portNumber } from "./index";
 
 // local
-// const server = `http://localhost:${portNumber}`;
+const server = `http://localhost:${portNumber}`;
 // prod
-const server = "https://cc-luma-api-5a085f15e5dc.herokuapp.com/";
+// const server = "https://cc-luma-api-5a085f15e5dc.herokuapp.com/";
 
 //--------------------------------------------------------------------------------------------------------------- theatre
 
@@ -168,3 +168,22 @@ const server = "https://cc-luma-api-5a085f15e5dc.herokuapp.com/";
 
 // const data = await response.json();
 // console.log(data);
+
+//-------------------------------
+
+// Is a user RSVP'd
+const endPoint = "isUserRSVPd";
+const JWT =
+  "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3ZjBmMGYxNGU5Y2FmYTlhYjUxODAxNTBhZTcxNGM5ZmQxYjVjMjYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI0MTc5MDkyMjUzNTctNjE3dTkzdGIza2x2ZmZsdTE2YTh1MDBmdTdqY3VxbHIuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI0MTc5MDkyMjUzNTctNjE3dTkzdGIza2x2ZmZsdTE2YTh1MDBmdTdqY3VxbHIuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ4ODQ5OTU4ODg2OTI0MTUzODAiLCJlbWFpbCI6InRhdGVmbHllcjFAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5iZiI6MTc1OTY5MTYwNSwibmFtZSI6IlRhdGUgQmVyZW5iYXVtIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0lxdHU5TkItN1Q3N1dBcUZSWlphbkZiMVlmX0dyRkN4ZXBIbnNoZkpvY0NVYjRZdzNTPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IlRhdGUiLCJmYW1pbHlfbmFtZSI6IkJlcmVuYmF1bSIsImlhdCI6MTc1OTY5MTkwNSwiZXhwIjoxNzU5Njk1NTA1LCJqdGkiOiIxOTE0NjRmYTUzNDY5OTYxMzM2ZDkzN2Y1ZmEwZTdmOGJlNGE0Nzc2In0.DyYEZlNHk8YydUbX3EHRU0Qb06xmiMpbTgwC0foUNjEimYF-FWkJbpOapjHv-qr28KCfAvZtBTzSIEmc6lM2MEPjvRgCgFukf7LQZ24J52YSJ64u3rp69RsBF6jMfRDUYTBVpLUxZ0K5kY6Yjy3aGbPK6pr6OF13amJbgZIP0_3EaojbPJfe00PB5NenKWuGnelrO9BCbhyTaDvh6wyp_HTEVvjneCSXRHrSXBdF7s2E7SkwRpaV6EsW1DsBXCJL8eAjEntLeFnL4DUrfApWTsyD7ip1imP0R7eEOYSGDYyYTmgbmvEW0LKp36GTjDPFPEoQjc8GwFO_G9pkdGO1ag";
+const filmUID = "filmUID-mgfot02x-d678fca9928171ade90ce29531f31694";
+
+const response = await fetch(`${server}/${endPoint}`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ JWT, filmUID }),
+});
+
+const data = await response.json();
+console.log(data);
