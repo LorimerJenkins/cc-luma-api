@@ -156,23 +156,31 @@ curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getAllFilms"
 
 ### Get Film From Hash
 
-Retrieves film information using a film UID.
+Retrieves film information using a film UID, including a list of interested users.
 
-**Endpoint:** `GET /getFilmFromHash`
+**Endpoint:** `POST /getFilmFromHash`
 
-**Query Parameters:**
+**Authentication:** Requires JWT
 
-| Parameter | Type   | Required | Description                    |
-| --------- | ------ | -------- | ------------------------------ |
-| `filmUID` | string | Yes      | Unique identifier for the film |
+**Request Body:**
+
+| Parameter | Type   | Required | Description                       |
+| --------- | ------ | -------- | --------------------------------- |
+| `filmUID` | string | Yes      | Unique identifier for the film    |
+| `JWT`     | string | Yes      | JSON Web Token for authentication |
 
 **Example Request:**
 
 ```bash
-curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getFilmFromHash?filmUID=filmUID-123"
+curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getFilmFromHash" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "filmUID": "filmUID-123",
+    "JWT": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3ZjBmMGYxNGU5Y2FmYTlhYjUxODAxNTBhZTcxNGM5ZmQxYjVjMjYiLCJ0eXAiOiJKV1QifQ..."
+  }'
 ```
 
-**Example Response:**
+**Example Response (User is signed up for the film):**
 
 ```json
 {
@@ -190,8 +198,53 @@ curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getFilmFromHash?film
   "cast": ["David Mitchell", "Robert Webb", "Olivia Colman"],
   "otherImages": [
     "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p274645_b_v13_af.jpg"
+  ],
+  "usersInterested": [
+    "userUID-104884995888692415380",
+    "userUID-987654321098765432",
+    "userUID-123456789012345678",
+    "userUID-456789012345678901"
   ]
 }
+```
+
+**Example Response (User is NOT signed up for the film):**
+
+```json
+{
+  "film": "Peep Show",
+  "filmUID": "filmUID-123",
+  "creatorUID": "creatorUID-123",
+  "targetCities": ["Austin", "New York"],
+  "date": "5/12/2025",
+  "time": "morning",
+  "runTimeMins": "60",
+  "genre": "comedy",
+  "trailer": "https://www.youtube.com/watch?v=uonrtGIick4",
+  "coverImage": "https://m.media-amazon.com/images/S/pv-target-images/65b427765a01ad9eccbc59fa3c61d8082620d3d91dc620c33512c2434d8d2664.jpg",
+  "description": "Peep Show is a British sitcom starring David Mitchell and Robert Webb as two contrasting flatmates, the awkward and frugal Mark, and the irresponsible and hedonistic Jeremy. The show is known for its unique point-of-view perspective, allowing viewers to experience events from Mark's or Jeremy's perspective through their internal monologues. The comedy stems from the characters' contrasting personalities, Mark's chronic social anxiety and inner turmoil, and Jeremy's often delusional and self-serving pursuits.",
+  "cast": ["David Mitchell", "Robert Webb", "Olivia Colman"],
+  "otherImages": [
+    "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p274645_b_v13_af.jpg"
+  ],
+  "usersInterested": [
+    "userUID-987654321098765432",
+    "userUID-456789012345678901",
+    "userUID-234567890123456789"
+  ]
+}
+```
+
+**Example Response (Film Not Found):**
+
+```json
+null
+```
+
+**Example Response (Invalid JWT):**
+
+```json
+"Invalid JWT"
 ```
 
 ### Create Film
