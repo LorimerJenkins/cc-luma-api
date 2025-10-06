@@ -145,7 +145,10 @@ app.post(createFilmEndPoint, async (req, res) => {
       });
     }
 
-    const response = await createFilm(film);
+    // @ts-ignore, we add a JWT to the film object for ease in this endpoint
+    const JWT = film.JWT;
+
+    const response = await createFilm(film, JWT);
 
     console.log(
       "\x1b[32m",
@@ -163,20 +166,20 @@ app.post(createFilmEndPoint, async (req, res) => {
 
 //--------------------------------------------------------------------------------------------------------------- fan
 
-// Get profile from auth0ID
+// Get profile from JWT
 const getProfileEndPoint = "/getProfile";
-app.get(getProfileEndPoint, async (req, res) => {
+app.post(getProfileEndPoint, async (req, res) => {
   try {
-    const { auth0UID } = req.query;
+    const { JWT } = req.body;
 
-    if (!auth0UID || typeof auth0UID !== "string") {
+    if (!JWT || typeof JWT !== "string") {
       return res.status(400).json({
         success: false,
-        error: "auth0UID query parameter is required",
+        error: "JWT query parameter is required",
       });
     }
 
-    const response = await getProfile(auth0UID);
+    const response = await getProfile(JWT);
 
     console.log(
       "\x1b[32m",
@@ -194,7 +197,7 @@ app.get(getProfileEndPoint, async (req, res) => {
 
 //-------------------------------
 
-// Update profile from auth0ID
+// Update profile from JWT
 const updateProfileEndPoint = "/updateProfile";
 app.post(updateProfileEndPoint, async (req, res) => {
   try {

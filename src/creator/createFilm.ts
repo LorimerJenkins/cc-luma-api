@@ -1,7 +1,8 @@
+import { createUID } from "../utils/createUID";
+import { verifyJWT } from "../utils/verifyJWT";
+
 export interface Film {
   film: string;
-  filmUID: string;
-  creatorUID: string;
   targetCities: string[];
   date: string;
   time: string;
@@ -14,6 +15,23 @@ export interface Film {
   otherImages: string[];
 }
 
-export async function createFilm(film: Film) {
+export async function createFilm(film: Film, JWT: string) {
+  const checkJWT = await verifyJWT(JWT);
+
+  if (!checkJWT) {
+    return "Invalid JWT";
+  }
+
+  // @ts-ignore
+  const { sub, email, name, picture } = checkJWT;
+
+  const userUID = `userUID-${sub}`;
+
+  const creatorUID = `creatorUID-${sub}`;
+
+  console.log(creatorUID);
+
+  const filmUID = createUID("filmUID");
+
   return true;
 }

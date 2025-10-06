@@ -2,8 +2,14 @@
 
 ## Base URL
 
+**Production:**
 ```
 https://cc-luma-api-5a085f15e5dc.herokuapp.com
+```
+
+**Local Development:**
+```
+http://localhost:{portNumber}
 ```
 
 ---
@@ -172,9 +178,8 @@ Creates a new film entry.
 
 | Field          | Type     | Required | Description                                   |
 | -------------- | -------- | -------- | --------------------------------------------- |
+| `JWT`          | string   | Yes      | JSON Web Token for authentication             |
 | `film`         | string   | Yes      | Film title                                    |
-| `filmUID`      | string   | Yes      | Unique identifier for the film                |
-| `creatorUID`   | string   | Yes      | Unique identifier for the creator             |
 | `targetCities` | string[] | Yes      | Array of target cities (non-empty)            |
 | `date`         | string   | Yes      | Screening date                                |
 | `time`         | string   | Yes      | Screening time                                |
@@ -192,9 +197,8 @@ Creates a new film entry.
 curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/createFilm" \
   -H "Content-Type: application/json" \
   -d '{
+    "JWT": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3ZjBmMGYxNGU5Y2FmYTlhYjUxODAxNTBhZTcxNGM5ZmQxYjVjMjYiLCJ0eXAiOiJKV1QifQ...",
     "film": "Peep Show",
-    "filmUID": "filmUID-123",
-    "creatorUID": "creatorUID-123",
     "targetCities": ["Austin", "New York"],
     "date": "5/12/2025",
     "time": "morning",
@@ -239,45 +243,50 @@ false
 
 Retrieves user profile information.
 
-**Endpoint:** `GET /getProfile`
+**Endpoint:** `POST /getProfile`
 
-**Query Parameters:**
+**Request Body:**
 
-| Parameter  | Type   | Required | Description                      |
-| ---------- | ------ | -------- | -------------------------------- |
-| `auth0UID` | string | Yes      | Auth0 unique identifier for user |
+| Parameter | Type   | Required | Description                       |
+| --------- | ------ | -------- | --------------------------------- |
+| `JWT`     | string | Yes      | JSON Web Token for authentication |
 
 **Example Request:**
 
 ```bash
-curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getProfile?auth0UID=auth0|68e18d70c44ac97f332acf1a"
+curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getProfile" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "JWT": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3ZjBmMGYxNGU5Y2FmYTlhYjUxODAxNTBhZTcxNGM5ZmQxYjVjMjYiLCJ0eXAiOiJKV1QifQ..."
+  }'
 ```
 
 **Example Response:**
 
 ```json
 {
-  "name": "Lorimer Jenkins",
-  "auth0UID": "auth0|68e18d70c44ac97f332acf1a",
-  "profilePic": "https://media.licdn.com/dms/image/v2/D4E03AQGhZqy0KdT2QA/profile-displayphoto-shrink_200_200/B4EZPbcT9mGYAc-/0/1734553452939?e=2147483647&v=beta&t=TSseAIS7xYMVPDi_FNSMdUxlNMiJMp6sYlz3ZhZjXsg",
-  "bio": "Ma name jeff.",
-  "email": "lorimer@theranos.com",
-  "gender": "male",
-  "number": "07283092723",
-  "birthday": "30/07/2003",
+  "name": "Tate Berenbaum",
+  "email": "tateflyer1@gmail.com",
+  "picture": "https://lh3.googleusercontent.com/a/ACg8ocIqtu9NB-7T77WAqFRZZanFb1Yf_GrFCxepHnshfJocCUb4Yw3S=s96-c",
+  "auth0UID": "google-oauth2|104884995886924153380",
+  "profilePic": "https://lh3.googleusercontent.com/a/ACg8ocIqtu9NB-7T77WAqFRZZanFb1Yf_GrFCxepHnshfJocCUb4Yw3S=s96-c",
+  "bio": "",
+  "gender": "",
+  "number": "",
+  "birthday": "",
   "socials": {
-    "x": "https://x.com/Lorimer_Jenkins",
-    "youtube": "https://www.youtube.com/@lorimerjenkins6265",
-    "linkedin": "https://www.linkedin.com/in/lorimerjenkins/",
-    "instagram": "https://www.instagram.com/lorimer_jenkins/",
-    "tiktok": "https://www.tiktok.com/@dannyboy83dannyboy",
-    "website": "https://lorimerjenkins.com"
+    "x": "",
+    "youtube": "",
+    "linkedin": "",
+    "instagram": "",
+    "tiktok": "",
+    "website": ""
   },
-  "interestedIn": ["filmUID-123"],
+  "interestedIn": [],
   "creatorAccount": {
-    "creatorEnabledAccount": true,
-    "creatorUID": "creatorUID-123",
-    "createdFilmUID": ["filmUID-123"]
+    "creatorEnabledAccount": false,
+    "creatorUID": "",
+    "createdFilmUID": []
   }
 }
 ```
@@ -300,7 +309,7 @@ Creates a new user profile.
 curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/createProfile" \
   -H "Content-Type: application/json" \
   -d '{
-    "JWT": "your_jwt_token_here"
+    "JWT": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3ZjBmMGYxNGU5Y2FmYTlhYjUxODAxNTBhZTcxNGM5ZmQxYjVjMjYiLCJ0eXAiOiJKV1QifQ..."
   }'
 ```
 
@@ -340,7 +349,7 @@ Updates user profile information.
 curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/updateProfile" \
   -H "Content-Type: application/json" \
   -d '{
-    "JWT": "your_jwt_token_here"
+    "JWT": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3ZjBmMGYxNGU5Y2FmYTlhYjUxODAxNTBhZTcxNGM5ZmQxYjVjMjYiLCJ0eXAiOiJKV1QifQ..."
   }'
 ```
 
@@ -381,7 +390,7 @@ Allows a user to RSVP for a film.
 curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/rsvpForFilm" \
   -H "Content-Type: application/json" \
   -d '{
-    "JWT": "your_jwt_token_here",
+    "JWT": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3ZjBmMGYxNGU5Y2FmYTlhYjUxODAxNTBhZTcxNGM5ZmQxYjVjMjYiLCJ0eXAiOiJKV1QifQ...",
     "filmUID": "filmUID-123"
   }'
 ```
@@ -427,3 +436,21 @@ All endpoints may return the following error responses:
   "error": "Error message"
 }
 ```
+
+---
+
+## Authentication
+
+Most endpoints require JWT authentication. The JWT token should be obtained through Google OAuth2 authentication and included in the request body for POST endpoints or as a query parameter for GET endpoints that require authentication.
+
+**JWT Structure:**
+
+The JWT contains the following claims:
+- `iss`: Issuer (https://accounts.google.com)
+- `sub`: User's unique Google ID
+- `email`: User's email address
+- `name`: User's full name
+- `picture`: URL to user's profile picture
+- `given_name`: User's first name
+- `family_name`: User's last name
+- `email_verified`: Boolean indicating if email is verified

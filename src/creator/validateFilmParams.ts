@@ -4,9 +4,8 @@ export function validateFilm(film: any): { valid: boolean; error?: string } {
   }
 
   const validations = [
+    { field: "JWT", type: "string", required: true },
     { field: "film", type: "string", required: true },
-    { field: "filmUID", type: "string", required: true },
-    { field: "creatorUID", type: "string", required: true },
     { field: "targetCities", type: "array", required: true, nonEmpty: true },
     { field: "date", type: "string", required: true },
     { field: "time", type: "string", required: true },

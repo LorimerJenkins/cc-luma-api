@@ -1,10 +1,10 @@
 [
   {
-    "name": "Lorimer Jenkins",
-    "auth0UID": "auth0|68e18d70c44ac97f332acf1a",
-    "profilePic": "https://media.licdn.com/dms/image/v2/D4E03AQGhZqy0KdT2QA/profile-displayphoto-shrink_200_200/B4EZPbcT9mGYAc-/0/1734553452939?e=2147483647&v=beta&t=TSseAIS7xYMVPDi_FNSMdUxlNMiJMp6sYlz3ZhZjXsg",
+    "name": "Tate Berenbaum",
+    "userUID": "userUID-104884995888692415380",
+    "profilePic": "https://lh3.googleusercontent.com/a/ACg8ocIqtu9NB-7T77WAqFRZZanFb1Yf_GrFCxepHnshfJocCUb4Yw3S=s96-c",
     "bio": "Ma name jeff.",
-    "email": "lorimer@theranos.com",
+    "email": "tateflyer1@gmail.com",
     "gender": "male",
     "number": "07283092723",
     "birthday": "30/07/2003",
@@ -19,7 +19,7 @@
     "interestedIn": ["filmUID-123"],
     "creatorAccount": {
       "creatorEnabledAccount": true,
-      "creatorUID": "creatorUID-123",
+      "creatorUID": "creatorUID-104884995888692415380",
       "createdFilmUID": ["filmUID-123"]
     }
   }

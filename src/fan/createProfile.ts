@@ -8,7 +8,9 @@ export async function createProfile(JWT: string) {
   }
 
   // @ts-ignore
-  const { sub: userUID, email, name, picture } = checkJWT;
+  const { sub, email, name, picture } = checkJWT;
+
+  const userUID = `userUID-${sub}`;
 
   return true;
 }
