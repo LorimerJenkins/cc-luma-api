@@ -1,6 +1,6 @@
 import { verifyJWT } from "../utils/verifyJWT";
 
-export async function updateProfile(JWT: string) {
+export async function createProfile(JWT: string) {
   const checkJWT = await verifyJWT(JWT);
 
   if (!checkJWT) {

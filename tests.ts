@@ -54,9 +54,20 @@ const server = `http://localhost:${portNumber}`;
 
 // // Update profile
 // const endPoint = "updateProfile";
-// const auth0UID = "auth0|68e18d70c44ac97f332acf1a";
+// const JWT = "";
 
-// const response = await fetch(`${server}/${endPoint}?auth0UID=${auth0UID}`);
+// const response = await fetch(`${server}/${endPoint}?JWT=${JWT}`);
+
+// const data = await response.json();
+// console.log(data);
+
+//-------------------------------
+
+// // Create profile
+// const endPoint = "createProfile";
+// const JWT = "";
+
+// const response = await fetch(`${server}/${endPoint}?JWT=${JWT}`);
 
 // const data = await response.json();
 // console.log(data);

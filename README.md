@@ -20,12 +20,12 @@ Retrieves information about a specific theatre corporation.
 
 | Parameter               | Type   | Required | Description                                   |
 | ----------------------- | ------ | -------- | --------------------------------------------- |
-| `theatreCorporationUid` | string | Yes      | Unique identifier for the theatre corporation |
+| `theatreCorporationUID` | string | Yes      | Unique identifier for the theatre corporation |
 
 **Example Request:**
 
 ```bash
-curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getTheatreCorporationInfo?theatreCorporationUid=CW"
+curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getTheatreCorporationInfo?theatreCorporationUID=theatreCorporationUID-123"
 ```
 
 **Example Response:**
@@ -213,6 +213,42 @@ curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getProfile?auth0UID=
 }
 ```
 
+### Create Profile
+
+Creates a new user profile.
+
+**Endpoint:** `GET /createProfile`
+
+**Query Parameters:**
+
+| Parameter | Type   | Required | Description                       |
+| --------- | ------ | -------- | --------------------------------- |
+| `JWT`     | string | Yes      | JSON Web Token for authentication |
+
+**Example Request:**
+
+```bash
+curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/createProfile?JWT=your_jwt_token_here"
+```
+
+**Example Response (Success):**
+
+```json
+true
+```
+
+**Example Response (Failure):**
+
+```json
+false
+```
+
+**Example Response (Invalid Authentication):**
+
+```json
+"Invalid JWT"
+```
+
 ### Update Profile
 
 Updates user profile information.
@@ -221,26 +257,32 @@ Updates user profile information.
 
 **Query Parameters:**
 
-| Parameter  | Type   | Required | Description                      |
-| ---------- | ------ | -------- | -------------------------------- |
-| `auth0UID` | string | Yes      | Auth0 unique identifier for user |
+| Parameter | Type   | Required | Description                       |
+| --------- | ------ | -------- | --------------------------------- |
+| `JWT`     | string | Yes      | JSON Web Token for authentication |
 
 **Example Request:**
 
 ```bash
-curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/updateProfile?auth0UID=auth0|68e18d70c44ac97f332acf1a"
+curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/updateProfile?JWT=your_jwt_token_here"
 ```
 
-**Example Response:**
+**Example Response (Success):**
 
 ```json
 true
 ```
 
-or
+**Example Response (Failure):**
 
 ```json
 false
+```
+
+**Example Response (Invalid Authentication):**
+
+```json
+"Invalid JWT"
 ```
 
 ---

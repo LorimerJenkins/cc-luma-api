@@ -11,6 +11,7 @@ import { getFilmFromHash } from "./src/creator/getFilmFromHash";
 import { getProfile } from "./src/fan/getProfile";
 import { updateProfile } from "./src/fan/updateProfile";
 import { getAllFilms } from "./src/theatre/getAllFilms";
+import { createProfile } from "./src/fan/createProfile";
 
 const app: express.Application = express();
 app.use(
@@ -154,16 +155,16 @@ app.get(getProfileEndPoint, async (req, res) => {
 const updateProfileEndPoint = "/updateProfile";
 app.get(updateProfileEndPoint, async (req, res) => {
   try {
-    const { auth0UID } = req.query;
+    const { JWT } = req.query;
 
-    if (!auth0UID || typeof auth0UID !== "string") {
+    if (!JWT || typeof JWT !== "string") {
       return res.status(400).json({
         success: false,
-        error: "auth0UID query parameter is required",
+        error: "JWT query parameter is required",
       });
     }
 
-    const response = await updateProfile(auth0UID);
+    const response = await updateProfile(JWT);
 
     console.log(
       "\x1b[32m",
@@ -172,6 +173,35 @@ app.get(updateProfileEndPoint, async (req, res) => {
     res.json(response);
   } catch (error) {
     console.error("\x1b[31m", `Error from ${updateProfileEndPoint}: ${error}`);
+    res.json({
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown Error",
+    });
+  }
+});
+
+// Create profile from JWT
+const createProfileEndPoint = "/createProfile";
+app.get(createProfileEndPoint, async (req, res) => {
+  try {
+    const { JWT } = req.query;
+
+    if (!JWT || typeof JWT !== "string") {
+      return res.status(400).json({
+        success: false,
+        error: "JWT query parameter is required",
+      });
+    }
+
+    const response = await createProfile(JWT);
+
+    console.log(
+      "\x1b[32m",
+      `Response from ${createProfileEndPoint}: ${JSON.stringify(response)}`,
+    );
+    res.json(response);
+  } catch (error) {
+    console.error("\x1b[31m", `Error from ${createProfileEndPoint}: ${error}`);
     res.json({
       success: false,
       error: error instanceof Error ? error.message : "Unknown Error",
