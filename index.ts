@@ -170,16 +170,9 @@ app.post(createFilmEndPoint, async (req, res) => {
 const getProfileEndPoint = "/getProfile";
 app.post(getProfileEndPoint, async (req, res) => {
   try {
-    const { JWT } = req.body;
+    const { JWT, userUID } = req.body;
 
-    if (!JWT || typeof JWT !== "string") {
-      return res.status(400).json({
-        success: false,
-        error: "JWT query parameter is required",
-      });
-    }
-
-    const response = await getProfile(JWT);
+    const response = await getProfile(JWT, userUID);
 
     console.log(
       "\x1b[32m",

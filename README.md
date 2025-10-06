@@ -16,6 +16,30 @@ http://localhost:{portNumber}
 
 ---
 
+## Authentication
+
+Most endpoints support flexible authentication using either:
+
+- **JWT (JSON Web Token)**: Obtained through Google OAuth2 authentication
+- **userUID**: The user's unique identifier
+
+You can use either authentication method depending on your use case. JWT is typically used for client-side applications, while userUID may be used for server-to-server communication or when the user identity is already known.
+
+**JWT Structure:**
+
+The JWT contains the following claims:
+
+- `iss`: Issuer (https://accounts.google.com)
+- `sub`: User's unique Google ID
+- `email`: User's email address
+- `name`: User's full name
+- `picture`: URL to user's profile picture
+- `given_name`: User's first name
+- `family_name`: User's last name
+- `email_verified`: Boolean indicating if email is verified
+
+---
+
 ## Theatre Endpoints
 
 ### Get Theatre Corporation Info
@@ -176,6 +200,8 @@ Creates a new film entry.
 
 **Endpoint:** `POST /createFilm`
 
+**Authentication:** Requires JWT
+
 **Request Body:**
 
 | Field          | Type     | Required | Description                                   |
@@ -243,7 +269,7 @@ false
 
 ### Get Profile
 
-Retrieves user profile information.
+Retrieves user profile information. Accepts either JWT or userUID for authentication.
 
 **Endpoint:** `POST /getProfile`
 
@@ -251,15 +277,39 @@ Retrieves user profile information.
 
 | Parameter | Type   | Required | Description                       |
 | --------- | ------ | -------- | --------------------------------- |
-| `JWT`     | string | Yes      | JSON Web Token for authentication |
+| `JWT`     | string | No\*     | JSON Web Token for authentication |
+| `userUID` | string | No\*     | User's unique identifier          |
 
-**Example Request:**
+\*At least one of `JWT` or `userUID` is required.
+
+**Example Request (with JWT):**
 
 ```bash
 curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getProfile" \
   -H "Content-Type: application/json" \
   -d '{
     "JWT": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3ZjBmMGYxNGU5Y2FmYTlhYjUxODAxNTBhZTcxNGM5ZmQxYjVjMjYiLCJ0eXAiOiJKV1QifQ..."
+  }'
+```
+
+**Example Request (with userUID):**
+
+```bash
+curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getProfile" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "userUID": "userUID-104884995888692415380"
+  }'
+```
+
+**Example Request (with both JWT and userUID):**
+
+```bash
+curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getProfile" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "JWT": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3ZjBmMGYxNGU5Y2FmYTlhYjUxODAxNTBhZTcxNGM5ZmQxYjVjMjYiLCJ0eXAiOiJKV1QifQ...",
+    "userUID": "userUID-104884995888692415380"
   }'
 ```
 
@@ -291,11 +341,22 @@ curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getProfile" \
 }
 ```
 
+**Example Response (Missing Authentication):**
+
+```json
+{
+  "success": false,
+  "error": "JWT or userUID query parameter is required"
+}
+```
+
 ### Create Profile
 
 Creates a new user profile.
 
 **Endpoint:** `POST /createProfile`
+
+**Authentication:** Requires JWT
 
 **Request Body:**
 
@@ -336,6 +397,8 @@ false
 Updates user profile information.
 
 **Endpoint:** `POST /updateProfile`
+
+**Authentication:** Requires JWT
 
 **Request Body:**
 
@@ -423,6 +486,8 @@ Allows a user to RSVP for a film.
 
 **Endpoint:** `POST /rsvpForFilm`
 
+**Authentication:** Requires JWT
+
 **Request Body:**
 
 | Parameter | Type   | Required | Description                       |
@@ -485,19 +550,10 @@ All endpoints may return the following error responses:
 
 ---
 
-## Authentication
+## Notes
 
-Most endpoints require JWT authentication. The JWT token should be obtained through Google OAuth2 authentication and included in the request body for POST endpoints or as a query parameter for GET endpoints that require authentication.
-
-**JWT Structure:**
-
-The JWT contains the following claims:
-
-- `iss`: Issuer (https://accounts.google.com)
-- `sub`: User's unique Google ID
-- `email`: User's email address
-- `name`: User's full name
-- `picture`: URL to user's profile picture
-- `given_name`: User's first name
-- `family_name`: User's last name
-- `email_verified`: Boolean indicating if email is verified
+- The `getProfile` endpoint is the only endpoint that currently supports both JWT and userUID authentication methods
+- When both JWT and userUID are provided to `getProfile`, both will be validated
+- All other endpoints requiring authentication currently only accept JWT
+- JWT tokens expire after a certain period (typically 1 hour based on the example token)
+- Error messages are returned in a consistent format with `success: false` and an `error` field describing the issue

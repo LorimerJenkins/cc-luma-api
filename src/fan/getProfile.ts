@@ -2,17 +2,19 @@ import { readFile } from "fs/promises";
 import { join } from "path";
 import { verifyJWT } from "../utils/verifyJWT";
 
-export async function getProfile(JWT: string) {
-  const checkJWT = await verifyJWT(JWT);
+export async function getProfile(JWT: string, userUID: string) {
+  if (JWT) {
+    const checkJWT = await verifyJWT(JWT);
 
-  if (!checkJWT) {
-    return "Invalid JWT";
+    if (!checkJWT) {
+      return "Invalid JWT";
+    }
+
+    // @ts-ignore
+    const { sub } = checkJWT;
+
+    userUID = `userUID-${sub}`;
   }
-
-  // @ts-ignore
-  const { sub, email, name, picture } = checkJWT;
-
-  const userUID = `userUID-${sub}`;
 
   const filePath = join(process.cwd(), "src", "data", "userData.json");
   const fileContent = await readFile(filePath, "utf-8");
