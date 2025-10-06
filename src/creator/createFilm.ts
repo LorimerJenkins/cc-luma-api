@@ -23,15 +23,22 @@ export async function createFilm(film: Film, JWT: string) {
   }
 
   // @ts-ignore
-  const { sub, email, name, picture } = checkJWT;
-
-  const userUID = `userUID-${sub}`;
+  const { sub } = checkJWT;
 
   const creatorUID = `creatorUID-${sub}`;
 
-  console.log(creatorUID);
-
   const filmUID = createUID("filmUID");
+
+  const filmWithUIDs = {
+    ...film,
+    filmUID,
+    creatorUID,
+  };
+
+  // @ts-ignore, remove JWT property
+  delete filmWithUIDs.JWT;
+
+  // then you need to upload the filmWithUIDs to mongo
 
   return true;
 }
