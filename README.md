@@ -162,6 +162,72 @@ curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getFilmFromHash?film
 }
 ```
 
+### Create Film
+
+Creates a new film entry.
+
+**Endpoint:** `POST /createFilm`
+
+**Request Body:**
+
+| Field          | Type     | Required | Description                                   |
+| -------------- | -------- | -------- | --------------------------------------------- |
+| `film`         | string   | Yes      | Film title                                    |
+| `filmUID`      | string   | Yes      | Unique identifier for the film                |
+| `creatorUID`   | string   | Yes      | Unique identifier for the creator             |
+| `targetCities` | string[] | Yes      | Array of target cities (non-empty)            |
+| `date`         | string   | Yes      | Screening date                                |
+| `time`         | string   | Yes      | Screening time                                |
+| `runTimeMins`  | string   | Yes      | Film runtime in minutes                       |
+| `genre`        | string   | Yes      | Film genre                                    |
+| `trailer`      | string   | Yes      | URL to trailer                                |
+| `coverImage`   | string   | Yes      | URL to cover image                            |
+| `description`  | string   | Yes      | Film description                              |
+| `cast`         | string[] | Yes      | Array of cast members (non-empty)             |
+| `otherImages`  | string[] | Yes      | Array of additional image URLs (can be empty) |
+
+**Example Request:**
+
+```bash
+curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/createFilm" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "film": "Peep Show",
+    "filmUID": "filmUID-123",
+    "creatorUID": "creatorUID-123",
+    "targetCities": ["Austin", "New York"],
+    "date": "5/12/2025",
+    "time": "morning",
+    "runTimeMins": "60",
+    "genre": "comedy",
+    "trailer": "https://www.youtube.com/watch?v=uonrtGIick4",
+    "coverImage": "https://m.media-amazon.com/images/S/pv-target-images/65b427765a01ad9eccbc59fa3c61d8082620d3d91dc620c33512c2434d8d2664.jpg",
+    "description": "Peep Show is a British sitcom starring David Mitchell and Robert Webb as two contrasting flatmates, the awkward and frugal Mark, and the irresponsible and hedonistic Jeremy. The show is known for its unique point-of-view perspective, allowing viewers to experience events from Mark'\''s or Jeremy'\''s perspective through their internal monologues. The comedy stems from the characters'\'' contrasting personalities, Mark'\''s chronic social anxiety and inner turmoil, and Jeremy'\''s often delusional and self-serving pursuits.",
+    "cast": ["David Mitchell", "Robert Webb", "Olivia Colman"],
+    "otherImages": [
+      "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p274645_b_v13_af.jpg"
+    ]
+  }'
+```
+
+**Example Response (Success):**
+
+```json
+{
+  "success": true,
+  "filmUID": "filmUID-123"
+}
+```
+
+**Example Response (Validation Error):**
+
+```json
+{
+  "success": false,
+  "error": "Missing required field: film"
+}
+```
+
 ---
 
 ## Fan Endpoints
@@ -217,9 +283,9 @@ curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getProfile?auth0UID=
 
 Creates a new user profile.
 
-**Endpoint:** `GET /createProfile`
+**Endpoint:** `POST /createProfile`
 
-**Query Parameters:**
+**Request Body:**
 
 | Parameter | Type   | Required | Description                       |
 | --------- | ------ | -------- | --------------------------------- |
@@ -228,7 +294,11 @@ Creates a new user profile.
 **Example Request:**
 
 ```bash
-curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/createProfile?JWT=your_jwt_token_here"
+curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/createProfile" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "JWT": "your_jwt_token_here"
+  }'
 ```
 
 **Example Response (Success):**
@@ -253,9 +323,9 @@ false
 
 Updates user profile information.
 
-**Endpoint:** `GET /updateProfile`
+**Endpoint:** `POST /updateProfile`
 
-**Query Parameters:**
+**Request Body:**
 
 | Parameter | Type   | Required | Description                       |
 | --------- | ------ | -------- | --------------------------------- |
@@ -264,7 +334,11 @@ Updates user profile information.
 **Example Request:**
 
 ```bash
-curl -X GET "https://cc-luma-api-5a085f15e5dc.herokuapp.com/updateProfile?JWT=your_jwt_token_here"
+curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/updateProfile" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "JWT": "your_jwt_token_here"
+  }'
 ```
 
 **Example Response (Success):**
@@ -286,3 +360,25 @@ false
 ```
 
 ---
+
+## Error Responses
+
+All endpoints may return the following error responses:
+
+**400 Bad Request:**
+
+```json
+{
+  "success": false,
+  "error": "Description of what went wrong"
+}
+```
+
+**500 Internal Server Error:**
+
+```json
+{
+  "success": false,
+  "error": "Error message"
+}
+```

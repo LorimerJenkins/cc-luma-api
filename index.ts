@@ -58,7 +58,7 @@ app.get(getTheatreCorporationInfoEndPoint, async (req, res) => {
       "\x1b[31m",
       `Error from ${getTheatreCorporationInfoEndPoint}: ${error}`,
     );
-    res.json({
+    res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : "Unknown Error",
     });
@@ -80,7 +80,7 @@ app.get(getAllFilmsEndpoint, async (req, res) => {
     res.json(response);
   } catch (error) {
     console.error("\x1b[31m", `Error from ${getAllFilmsEndpoint}: ${error}`);
-    res.json({
+    res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : "Unknown Error",
     });
@@ -114,7 +114,7 @@ app.get(getFilmFromHashEndPoint, async (req, res) => {
       "\x1b[31m",
       `Error from ${getFilmFromHashEndPoint}: ${error}`,
     );
-    res.json({
+    res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : "Unknown Error",
     });
@@ -159,6 +159,7 @@ app.post(createFilmEndPoint, async (req, res) => {
     });
   }
 });
+
 //--------------------------------------------------------------------------------------------------------------- fan
 
 // Get profile from auth0ID
@@ -183,7 +184,7 @@ app.get(getProfileEndPoint, async (req, res) => {
     res.json(response);
   } catch (error) {
     console.error("\x1b[31m", `Error from ${getProfileEndPoint}: ${error}`);
-    res.json({
+    res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : "Unknown Error",
     });
