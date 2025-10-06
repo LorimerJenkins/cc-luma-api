@@ -7,5 +7,8 @@ export async function updateProfile(JWT: string) {
     return "Invalid JWT";
   }
 
+  // @ts-ignore
+  const { sub: userUID, email, name, picture } = checkJWT;
+
   return true;
 }
