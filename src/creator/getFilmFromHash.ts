@@ -1,11 +1,15 @@
-import { readFile } from "fs/promises";
-import { join } from "path";
+import { getDatabase } from "../db/mongoClient";
 
 export async function getFilmFromHash(filmUID: string) {
-  const filePath = join(process.cwd(), "src", "data", "filmData.json");
-  const fileContent = await readFile(filePath, "utf-8");
-  const filmData = JSON.parse(fileContent);
+  try {
+    const db = await getDatabase();
+    const filmsCollection = db.collection("films");
 
-  const film = filmData.find((film: any) => film.filmUID === filmUID);
-  return film;
+    const film = await filmsCollection.findOne({ filmUID });
+
+    return film;
+  } catch (error) {
+    console.error("Error fetching film:", error);
+    return null;
+  }
 }

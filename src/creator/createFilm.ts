@@ -1,5 +1,6 @@
 import { createUID } from "../utils/createUID";
 import { verifyJWT } from "../utils/verifyJWT";
+import { getDatabase } from "../db/mongoClient";
 
 export interface Film {
   film: string;
@@ -26,7 +27,6 @@ export async function createFilm(film: Film, JWT: string) {
   const { sub } = checkJWT;
 
   const creatorUID = `creatorUID-${sub}`;
-
   const filmUID = createUID("filmUID");
 
   const filmWithUIDs = {
@@ -38,7 +38,23 @@ export async function createFilm(film: Film, JWT: string) {
   // @ts-ignore, remove JWT property
   delete filmWithUIDs.JWT;
 
-  // then you need to upload the filmWithUIDs to mongo
+  // Upload to MongoDB
+  try {
+    const db = await getDatabase();
+    const filmsCollection = db.collection("films");
 
-  return true;
+    const result = await filmsCollection.insertOne(filmWithUIDs);
+
+    return {
+      success: true,
+      filmUID,
+      insertedId: result.insertedId,
+    };
+  } catch (error) {
+    console.error("Error inserting film:", error);
+    return {
+      success: false,
+      error: "Failed to create film",
+    };
+  }
 }
