@@ -285,7 +285,6 @@ curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getProfile" \
   },
   "interestedIn": [],
   "creatorAccount": {
-    "creatorEnabledAccount": false,
     "creatorUID": "",
     "createdFilmUID": []
   }

@@ -18,7 +18,6 @@
     },
     "interestedIn": ["filmUID-123"],
     "creatorAccount": {
-      "creatorEnabledAccount": true,
       "creatorUID": "creatorUID-104884995888692415380",
       "createdFilmUID": ["filmUID-123"]
     }
