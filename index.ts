@@ -15,6 +15,7 @@ import { createProfile } from "./src/fan/createProfile";
 import { createFilm } from "./src/creator/createFilm";
 import { validateFilm } from "./src/creator/validateFilmParams";
 import { type Film } from "./src/creator/createFilm";
+import { rsvpForFilm } from "./src/fan/rsvpForFilm";
 
 const app: express.Application = express();
 app.use(
@@ -246,6 +247,42 @@ app.post(createProfileEndPoint, async (req, res) => {
     res.json(response);
   } catch (error) {
     console.error("\x1b[31m", `Error from ${createProfileEndPoint}: ${error}`);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown Error",
+    });
+  }
+});
+
+//-------------------------------
+
+// RSVP for film
+const rsvpForFilmEndPoint = "/rsvpForFilm";
+app.post(rsvpForFilmEndPoint, async (req, res) => {
+  try {
+    const { JWT, filmUID } = req.body;
+
+    if (
+      !JWT ||
+      typeof JWT !== "string" ||
+      !filmUID ||
+      typeof filmUID !== "string"
+    ) {
+      return res.status(400).json({
+        success: false,
+        error: "JWT + filmUID are required in request body",
+      });
+    }
+
+    const response = await rsvpForFilm(JWT, filmUID);
+
+    console.log(
+      "\x1b[32m",
+      `Response from ${rsvpForFilmEndPoint}: ${JSON.stringify(response)}`,
+    );
+    res.json(response);
+  } catch (error) {
+    console.error("\x1b[31m", `Error from ${rsvpForFilmEndPoint}: ${error}`);
     res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : "Unknown Error",

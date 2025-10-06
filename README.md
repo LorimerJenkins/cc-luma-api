@@ -362,6 +362,48 @@ false
 "Invalid JWT"
 ```
 
+### RSVP for Film
+
+Allows a user to RSVP for a film.
+
+**Endpoint:** `POST /rsvpForFilm`
+
+**Request Body:**
+
+| Parameter | Type   | Required | Description                       |
+| --------- | ------ | -------- | --------------------------------- |
+| `JWT`     | string | Yes      | JSON Web Token for authentication |
+| `filmUID` | string | Yes      | Unique identifier for the film    |
+
+**Example Request:**
+
+```bash
+curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/rsvpForFilm" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "JWT": "your_jwt_token_here",
+    "filmUID": "filmUID-123"
+  }'
+```
+
+**Example Response (Success):**
+
+```json
+true
+```
+
+**Example Response (Failure):**
+
+```json
+false
+```
+
+**Example Response (Invalid Authentication):**
+
+```json
+"Invalid JWT"
+```
+
 ---
 
 ## Error Responses
