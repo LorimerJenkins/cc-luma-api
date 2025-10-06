@@ -24,7 +24,7 @@ export async function createFilm(film: Film, JWT: string) {
   }
 
   // @ts-ignore
-  const { sub } = checkJWT;
+  const { sub, name } = checkJWT;
 
   const creatorUID = `creatorUID-${sub}`;
   const filmUID = createUID("filmUID");
@@ -33,6 +33,7 @@ export async function createFilm(film: Film, JWT: string) {
     ...film,
     filmUID,
     creatorUID,
+    creatorName: name,
   };
 
   // @ts-ignore, remove JWT property
