@@ -12,5 +12,7 @@ export async function rsvpForFilm(JWT: string, filmUID: string) {
 
   const userUID = `userUID-${sub}`;
 
+  // we then now need to search for the users object in userData.json and update the interestedIn array with the filmUID
+
   return true;
 }
