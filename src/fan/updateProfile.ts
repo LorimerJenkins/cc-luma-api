@@ -1,10 +1,30 @@
+// updateProfile.ts
 import { verifyJWT } from "../utils/verifyJWT";
 
-export async function updateProfile(JWT: string) {
+interface ProfileUpdates {
+  bio?: string;
+  gender?: string;
+  number?: string;
+  birthday?: string;
+  socials?: {
+    x?: string;
+    youtube?: string;
+    linkedin?: string;
+    instagram?: string;
+    tiktok?: string;
+    website?: string;
+  };
+  interestedIn?: string[];
+}
+
+export async function updateProfile(JWT: string, updates: ProfileUpdates) {
   const checkJWT = await verifyJWT(JWT);
 
   if (!checkJWT) {
-    return "Invalid JWT";
+    return {
+      success: false,
+      error: "Invalid JWT",
+    };
   }
 
   // @ts-ignore
@@ -12,5 +32,20 @@ export async function updateProfile(JWT: string) {
 
   const userUID = `userUID-${sub}`;
 
-  return true;
+  // Console log the changes
+  console.log("\x1b[36m", "=== Profile Update Request ===");
+  console.log("\x1b[33m", `UserUID: ${userUID}`);
+  console.log("\x1b[33m", `Email: ${email}`);
+  console.log("\x1b[33m", `Name: ${name}`);
+  console.log("\x1b[35m", "Updates to apply:");
+  console.log(JSON.stringify(updates, null, 2));
+  console.log("\x1b[36m", "==============================");
+
+  // TODO: Actually update the database here
+
+  return {
+    success: true,
+    userUID,
+    appliedUpdates: updates,
+  };
 }

@@ -268,25 +268,25 @@ curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getProfile" \
 ```json
 {
   "name": "Tate Berenbaum",
+  "userUID": "userUID-104884995888692415380",
+  "profilePic": "https://lh3.googleusercontent.com/a/ACg8ocIqtu9NB-7T77WAqFRZZanFb1Yf_GrFCxepHnshfJocCUb4Yw3S=s96-c",
+  "bio": "My name is Tate and I hate Ice Cream.",
   "email": "tateflyer1@gmail.com",
-  "picture": "https://lh3.googleusercontent.com/a/ACg8ocIqtu9NB-7T77WAqFRZZanFb1Yf_GrFCxepHnshfJocCUb4Yw3S=s96-c",
-  "auth0UID": "google-oauth2|104884995886924153380",
-  "bio": "",
-  "gender": "",
-  "number": "",
-  "birthday": "",
+  "gender": "male",
+  "number": "07283092723",
+  "birthday": "30/07/2003",
   "socials": {
-    "x": "",
-    "youtube": "",
-    "linkedin": "",
-    "instagram": "",
-    "tiktok": "",
-    "website": ""
+    "x": "https://x.com/Lorimer_Jenkins",
+    "youtube": "https://www.youtube.com/@lorimerjenkins6265",
+    "linkedin": "https://www.linkedin.com/in/lorimerjenkins/",
+    "instagram": "https://www.instagram.com/lorimer_jenkins/",
+    "tiktok": "https://www.tiktok.com/@dannyboy83dannyboy",
+    "website": "https://lorimerjenkins.com"
   },
-  "interestedIn": [],
+  "interestedIn": ["filmUID-123"],
   "creatorAccount": {
-    "creatorUID": "",
-    "createdFilmUID": []
+    "creatorUID": "creatorUID-104884995888692415380",
+    "createdFilmUID": ["filmUID-123"]
   }
 }
 ```
@@ -339,9 +339,22 @@ Updates user profile information.
 
 **Request Body:**
 
-| Parameter | Type   | Required | Description                       |
-| --------- | ------ | -------- | --------------------------------- |
-| `JWT`     | string | Yes      | JSON Web Token for authentication |
+| Parameter                   | Type     | Required | Description                              |
+| --------------------------- | -------- | -------- | ---------------------------------------- |
+| `JWT`                       | string   | Yes      | JSON Web Token for authentication        |
+| `updates`                   | object   | Yes      | Object containing fields to update       |
+| `updates.bio`               | string   | No       | User biography                           |
+| `updates.gender`            | string   | No       | User gender                              |
+| `updates.number`            | string   | No       | User phone number                        |
+| `updates.birthday`          | string   | No       | User birthday (format: DD/MM/YYYY)       |
+| `updates.socials`           | object   | No       | Social media links object                |
+| `updates.socials.x`         | string   | No       | X (Twitter) profile URL                  |
+| `updates.socials.youtube`   | string   | No       | YouTube channel URL                      |
+| `updates.socials.linkedin`  | string   | No       | LinkedIn profile URL                     |
+| `updates.socials.instagram` | string   | No       | Instagram profile URL                    |
+| `updates.socials.tiktok`    | string   | No       | TikTok profile URL                       |
+| `updates.socials.website`   | string   | No       | Personal website URL                     |
+| `updates.interestedIn`      | string[] | No       | Array of film UIDs user is interested in |
 
 **Example Request:**
 
@@ -349,26 +362,59 @@ Updates user profile information.
 curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/updateProfile" \
   -H "Content-Type: application/json" \
   -d '{
-    "JWT": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3ZjBmMGYxNGU5Y2FmYTlhYjUxODAxNTBhZTcxNGM5ZmQxYjVjMjYiLCJ0eXAiOiJKV1QifQ..."
+    "JWT": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjE3ZjBmMGYxNGU5Y2FmYTlhYjUxODAxNTBhZTcxNGM5ZmQxYjVjMjYiLCJ0eXAiOiJKV1QifQ...",
+    "updates": {
+      "bio": "I actually love ice cream now!",
+      "gender": "male",
+      "number": "07283092723",
+      "birthday": "30/07/2003",
+      "socials": {
+        "x": "https://x.com/Lorimer_Jenkins",
+        "youtube": "https://www.youtube.com/@lorimerjenkins6265",
+        "linkedin": "https://www.linkedin.com/in/lorimerjenkins/"
+      },
+      "interestedIn": ["filmUID-123", "filmUID-456"]
+    }
   }'
 ```
 
 **Example Response (Success):**
 
 ```json
-true
-```
-
-**Example Response (Failure):**
-
-```json
-false
+{
+  "success": true,
+  "userUID": "userUID-104884995886924153380",
+  "appliedUpdates": {
+    "bio": "I actually love ice cream now!",
+    "gender": "male",
+    "number": "07283092723",
+    "birthday": "30/07/2003",
+    "socials": {
+      "x": "https://x.com/Lorimer_Jenkins",
+      "youtube": "https://www.youtube.com/@lorimerjenkins6265",
+      "linkedin": "https://www.linkedin.com/in/lorimerjenkins/"
+    },
+    "interestedIn": ["filmUID-123", "filmUID-456"]
+  }
+}
 ```
 
 **Example Response (Invalid Authentication):**
 
 ```json
-"Invalid JWT"
+{
+  "success": false,
+  "error": "Invalid JWT"
+}
+```
+
+**Example Response (Missing Updates):**
+
+```json
+{
+  "success": false,
+  "error": "updates object is required in request body"
+}
 ```
 
 ### RSVP for Film

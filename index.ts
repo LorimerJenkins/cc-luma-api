@@ -201,7 +201,7 @@ app.post(getProfileEndPoint, async (req, res) => {
 const updateProfileEndPoint = "/updateProfile";
 app.post(updateProfileEndPoint, async (req, res) => {
   try {
-    const { JWT } = req.body;
+    const { JWT, updates } = req.body;
 
     if (!JWT || typeof JWT !== "string") {
       return res.status(400).json({
@@ -210,7 +210,14 @@ app.post(updateProfileEndPoint, async (req, res) => {
       });
     }
 
-    const response = await updateProfile(JWT);
+    if (!updates || typeof updates !== "object") {
+      return res.status(400).json({
+        success: false,
+        error: "updates object is required in request body",
+      });
+    }
+
+    const response = await updateProfile(JWT, updates);
 
     console.log(
       "\x1b[32m",
