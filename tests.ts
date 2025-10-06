@@ -88,7 +88,6 @@ const server = `http://localhost:${portNumber}`;
 //   body: JSON.stringify({ JWT }),
 // });
 
-
 // const data = await response.json();
 // console.log(data);
 

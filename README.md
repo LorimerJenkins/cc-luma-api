@@ -3,11 +3,13 @@
 ## Base URL
 
 **Production:**
+
 ```
 https://cc-luma-api-5a085f15e5dc.herokuapp.com
 ```
 
 **Local Development:**
+
 ```
 http://localhost:{portNumber}
 ```
@@ -446,6 +448,7 @@ Most endpoints require JWT authentication. The JWT token should be obtained thro
 **JWT Structure:**
 
 The JWT contains the following claims:
+
 - `iss`: Issuer (https://accounts.google.com)
 - `sub`: User's unique Google ID
 - `email`: User's email address
