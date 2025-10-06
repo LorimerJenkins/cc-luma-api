@@ -333,7 +333,7 @@ app.post(isUserRSVPdEndpoint, async (req, res) => {
 //-------------------------------
 
 // Cancel a user RSVP
-const cancelUserRSVPEndpoint = "/cancelUserRsvp";
+const cancelUserRSVPEndpoint = "/cancelUserRSVP";
 app.post(cancelUserRSVPEndpoint, async (req, res) => {
   try {
     const { JWT, filmUID } = req.body;
