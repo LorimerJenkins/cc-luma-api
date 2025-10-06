@@ -271,7 +271,6 @@ curl -X POST "https://cc-luma-api-5a085f15e5dc.herokuapp.com/getProfile" \
   "email": "tateflyer1@gmail.com",
   "picture": "https://lh3.googleusercontent.com/a/ACg8ocIqtu9NB-7T77WAqFRZZanFb1Yf_GrFCxepHnshfJocCUb4Yw3S=s96-c",
   "auth0UID": "google-oauth2|104884995886924153380",
-  "profilePic": "https://lh3.googleusercontent.com/a/ACg8ocIqtu9NB-7T77WAqFRZZanFb1Yf_GrFCxepHnshfJocCUb4Yw3S=s96-c",
   "bio": "",
   "gender": "",
   "number": "",
